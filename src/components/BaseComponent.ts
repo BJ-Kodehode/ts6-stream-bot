@@ -1,5 +1,7 @@
-// Base class for components
+import type { BotContext } from '../core/types.js';
 
-export class BaseComponent {
-    // common functionality
+export abstract class BaseComponent {
+  abstract readonly name: string;
+  abstract onInit(ctx: BotContext):  Promise<void>;
+  abstract onDestroy():              Promise<void>;
 }
