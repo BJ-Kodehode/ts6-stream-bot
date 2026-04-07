@@ -1,3 +1,21 @@
-# Configuration for ts6-stream-bot
+# TS6 Stream Bot — konfigurasjon
 
-# Add your settings here
+teamspeak:
+  # REST API-adresse til TS6-serveren
+  apiUrl: "http://localhost:10080/v1"
+  # API-nøkkel generert i TS6-klienten: Server Settings → API Keys
+  apiKey: "din-ts6-api-nøkkel-her"
+  # WebSocket-adresse til TS6-serveren (for klientprotokoll)
+  wsUrl: "ws://localhost:9987"
+  # Webhook-port boten lytter på for push-events fra TS6
+  webhookPort: 3000
+
+livekit:
+  url:       "ws://localhost:7880"
+  apiKey:    "devkey"
+  apiSecret: "secret"
+  roomName:  "ts6-stream"
+
+bot:
+  identity: "ts6-stream-bot"
+  logLevel: "info"   # debug | info | warn | error
