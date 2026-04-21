@@ -24,6 +24,14 @@ Welcome to TS6 Stream Bot documentation. This guide will help you understand, se
 - **[API.md](./API.md)** — Complete API reference for all classes and methods
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** — Development workflow, code standards, testing
 
+### Planning & Reviews (added 2026-04-21)
+
+- **[ROADMAP.md](./ROADMAP.md)** — Sprint-basert arbeidsplan fra v0.1 til v1.0 (Sprint 0–7)
+- **[CODE_REVIEW.md](./CODE_REVIEW.md)** — Linje-for-linje audit: 30 funn med alvorlighet og konkret fix
+- **[IMPROVEMENTS.md](./IMPROVEMENTS.md)** — Oppgraderinger: arkitektur, testing, observability, reliability, sikkerhet, ytelse
+- **[FRONTEND_DESIGN.md](./FRONTEND_DESIGN.md)** — Dashboard-spec + designsystem (React + Vite)
+- **[styles/design-tokens.css](./styles/design-tokens.css)** — Implementasjon av design tokens (CSS-variabler)
+
 ---
 
 ## Common Tasks
@@ -204,12 +212,25 @@ When reporting issues, include:
 ```
 Documentation/
 ├── INDEX.md (you are here)
-├── README.md (main entry point)
-├── SETUP.md (installation and config)
-├── ARCHITECTURE.md (system design)
-├── API.md (complete API reference)
-├── TROUBLESHOOTING.md (common issues)
-└── CONTRIBUTING.md (development guide)
+├── README.md (main entry point — ../README.md)
+│
+├── User-facing
+│   ├── SETUP.md             (installation and config)
+│   └── TROUBLESHOOTING.md   (common issues)
+│
+├── Developer reference
+│   ├── ARCHITECTURE.md      (system design)
+│   ├── API.md               (complete API reference)
+│   ├── CONTRIBUTING.md      (development guide)
+│   └── ts6-stream-bot-doc.md (original technical design doc)
+│
+└── Planning & quality (new, 2026-04-21)
+    ├── ROADMAP.md           (sprint-basert arbeidsplan)
+    ├── CODE_REVIEW.md       (linje-for-linje audit)
+    ├── IMPROVEMENTS.md      (oppgraderinger og mønstre)
+    ├── FRONTEND_DESIGN.md   (dashboard + designsystem)
+    └── styles/
+        └── design-tokens.css
 ```
 
 ---
