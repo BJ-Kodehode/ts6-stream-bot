@@ -2,7 +2,9 @@
 
 > **Formål:** Konkret, linje-for-linje audit av kildekoden.
 > **Metode:** Hvert funn har alvorlighetsgrad, fil/linje-referanse, forklaring på _hvorfor_ det er et problem, og en **konkret fix** klar til å lime inn.
-> **Dato:** 2026-04-21 • **Kodebase versjon:** 0.1.0 (commit 5a6b5d5)
+> **Dato:** 2026-04-21 (addendum 2026-04-21) • **Kodebase versjon:** 0.1.0 (commit 5a6b5d5)
+>
+> **Addendum:** To nye funn lagt til etter faktisk `npm install` + build-test — se [addendum-seksjonen](#addendum--funn-fra-faktisk-npm-install--build) (A1: `ignoreDeprecations` krasj, A2: vulns via Vitest 1.6). Resten av reviewen (#1–#30) er uendret.
 
 ---
 
@@ -792,17 +794,96 @@ Mål: 60 % coverage til Sprint 1-slutt, 80 % til v1.0.
 Sprint 0-S0-1 gjennom S0-4 kan kjøres sekvensielt:
 
 ```bash
-# 1. Installer manglende pakke
+# 1. Installer manglende pakke (funn #1)
 npm install yaml
 
-# 2. Oppdater .gitignore (kopier innholdet over)
+# 2. Fjern ugyldig ignoreDeprecations-verdi (funn A1)
+#    Åpne tsconfig.json og slett eller endre linjen:
+#      "ignoreDeprecations": "6.0",
+#    → slett linjen helt (anbefalt) eller sett til "5.0"
 
-# 3. Rename config.yaml → config.example.yaml med dummy-verdier
+# 3. Oppdater .gitignore (funn #2 — kopier innholdet fra seksjonen over)
+
+# 4. Rename config.yaml → config.example.yaml med dummy-verdier
 #    Oppretthold config.yaml lokalt med ekte verdier (nå gitignored)
 
-# 4. Verifiser
-npm run build
-npm run dev   # Skal starte uten TS6-tilkobling — feile ryddig
+# 5. Verifiser
+npm run build   # Skal være grønn
+npm run dev     # Skal starte og feile ryddig uten TS6-server
+```
+
+---
+
+## Addendum — funn fra faktisk `npm install` + build
+
+Disse ble oppdaget ved å _kjøre_ prosjektet etter at audit-dokumentet var skrevet. De er ikke synlige fra kildekoden alene.
+
+### A1 — 🔴 Kritisk: `ignoreDeprecations: "6.0"` er ugyldig i TS 5.9
+
+**Fil:** [tsconfig.json:6](../tsconfig.json#L6) • **Symptom:** `npm run build` feiler selv med `yaml` installert.
+
+```json
+"ignoreDeprecations": "6.0",
+```
+
+TypeScript 5.9.3 (som `^5.7.0` resolver til per 2026-04-21) aksepterer **kun** `"5.0"` for denne opsjonen. Build kaster:
+
+```
+tsconfig.json(6,27): error TS5103: Invalid value for '--ignoreDeprecations'.
+```
+
+Dette betyr at **funn #1 (yaml) ikke er nok alene** for at `npm run build` skal gå grønt. Både A1 og #1 må fikses før Sprint 0 kan starte.
+
+Kom inn i commit `45e7c52: feat: add ignoreDeprecations option to TypeScript configuration` — antakelig lagt inn for å forberede oppgradering til TS 6.x, men "6.0" er ikke en gyldig verdi før TS-major faktisk heter 6.
+
+**Fix (én av to):**
+
+```json
+// A — sett riktig verdi for TS 5.x
+"ignoreDeprecations": "5.0",
+```
+
+```json
+// B — fjern linjen helt (anbefalt)
+// Ingen av nåværende tsconfig-options er deprecated i TS 5.x,
+// så flagget er ikke nødvendig per nå.
+```
+
+**Verifisert fix-effekt:** Med alternativ A: `npm run build` er grønn. `npm run dev` starter, registrerer alle 4 komponenter, og feiler ryddig med `"TS6 REST API utilgjengelig"` — akkurat som forventet uten en kjørende TS6-server. Ingen andre build-feil i kodebasen.
+
+---
+
+### A2 — 🟡 Medium: 4 moderate vulnerabilities via Vitest 1.6
+
+**Fil:** [package.json](../package.json) • **Symptom:** `npm audit` viser 4 moderate-severity vulns.
+
+```
+esbuild  <=0.24.2
+Severity: moderate
+esbuild enables any website to send any requests to the development server
+and read the response — https://github.com/advisories/GHSA-67mh-4wv8-2f99
+
+node_modules/vite/node_modules/esbuild
+  vite  <=6.4.1
+    node_modules/vite
+    vite-node  <=2.2.0-beta.2
+      node_modules/vite-node
+      vitest  0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2
+        node_modules/vitest
+```
+
+Kjeden: `vitest@1.6` → `vite-node` → `vite` → `esbuild`. Vitest 1.6 er ~2 år gammel. Gjeldende major er 4.x (fra 2025).
+
+`npm audit fix --force` foreslår oppgradering til `vitest@4.1.5` — men det er en breaking change og berører tester som ennå ikke er skrevet.
+
+**Risiko:** `esbuild`-vulnen rammer kun dev-server, ikke prod runtime. Ingen umiddelbar trussel mot boten i drift.
+
+**Fix:** Ta som del av Sprint 1 (tester skrives for første gang). Oppgrader til Vitest 4.x samtidig som du setter opp test-strukturen. Legg til i [ROADMAP.md](./ROADMAP.md) S0-10:
+
+```bash
+npm install -D vitest@^4.1.0
+# Verifiser at package.json peker på ^4.1.0 eller høyere
+npm audit   # Skal nå være rent
 ```
 
 ---
@@ -811,14 +892,15 @@ npm run dev   # Skal starte uten TS6-tilkobling — feile ryddig
 
 | Alvorlighet | Antall funn |
 |---|---|
-| 🔴 Kritisk | 3 |
+| 🔴 Kritisk | 3 + 1 (A1) = **4** |
 | 🟠 Høy | 7 |
-| 🟡 Medium | 10 |
+| 🟡 Medium | 10 + 1 (A2) = **11** |
 | 🟢 Lav | 10 |
-| **Totalt** | **30** |
+| **Totalt** | **32** |
 
-**Absolutt prioritet:** #1 (yaml-pakke), #2 (.gitignore), #3 (process.exit).
+**Absolutt prioritet (build kan ikke kompilere uten):** #1 (yaml-pakke), **A1 (ignoreDeprecations)**, #2 (.gitignore), #3 (process.exit).
 **Deretter:** #4 (webhook), #5 (chat-svar), #6 (reconnect), #7 (logger), #9 (eventtyping).
+**Sprint 1:** A2 (Vitest-oppgradering) sammen med første tester.
 
 Resten kan håndteres i løpet av Sprint 1–2.
 

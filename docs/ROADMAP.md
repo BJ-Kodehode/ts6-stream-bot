@@ -24,7 +24,8 @@
 | Observability (metrics, health) | 🔴 0 % | Kun console/file-logg |
 | Dashboard/Frontend | 🔴 0 % | Ikke startet — foreslått i [FRONTEND_DESIGN.md](./FRONTEND_DESIGN.md) |
 
-**Kritisk blocker:** TS6 sin WebSocket-klientprotokoll er ikke reverse-engineered. Alt som handler om WebRTC, stream-start, ICE-candidates osv. er stubs.
+**Kritisk blocker #1 (build):** `npm run build` feiler i dag av to grunner — manglende `yaml`-pakke (CR #1) og ugyldig `ignoreDeprecations: "6.0"` (CR A1). Må fikses først.
+**Kritisk blocker #2 (runtime):** TS6 sin WebSocket-klientprotokoll er ikke reverse-engineered. Alt som handler om WebRTC, stream-start, ICE-candidates osv. er stubs.
 
 ---
 
@@ -44,6 +45,7 @@
 
 ### Oppgaver
 - [ ] **S0-1** Legg til `yaml` i `package.json` (eller bytt til `js-yaml`). Kjør `npm install`. [Se CODE_REVIEW funn #1]
+- [ ] **S0-1b** Fjern ugyldig `"ignoreDeprecations": "6.0"` fra `tsconfig.json` — TS 5.9 aksepterer kun `"5.0"`, så enten slett linjen eller sett til `"5.0"`. [Se CODE_REVIEW funn A1] ⚠️ _uten denne fixen feiler `tsc` selv med `yaml` installert._
 - [ ] **S0-2** Fix `.gitignore`: legg til `bot.log`, `ts6-events.jsonl`, `ts6-ws-raw.jsonl`, `.env`, `config.local.yaml`, `*.pem`. Sensitive filer har allerede lekket om noen har committet `config.yaml` med ekte nøkkel.
 - [ ] **S0-3** Lag `config.example.yaml` med dummy-verdier, og la `config.yaml` være gitignored.
 - [ ] **S0-4** Legg til env-støtte (Zod-override): `TS6_API_KEY` og `LIVEKIT_API_SECRET` skal helst komme fra env, ikke YAML.
@@ -52,14 +54,18 @@
 - [ ] **S0-7** Lag GitHub Actions workflow (`.github/workflows/ci.yml`): install → build → test.
 - [ ] **S0-8** Fix `README.md` "npm test" påstand — det finnes ingen tester ennå. Oppdatert status i [STATUS.md](./STATUS.md) eller inline.
 - [ ] **S0-9** Fjern `DebugComponent` sin ubrukte `TSSignaling`-instans (linje 27–28 — den blir opprettet men aldri koblet til).
+- [ ] **S0-10** Oppgrader Vitest: `npm install -D vitest@^4.1.0`. Fjerner 4 moderate vulnerabilities i `esbuild`/`vite`/`vite-node`-kjeden. Breaking change for test-API, men ingen tester finnes ennå — trygt å bytte nå. [Se CODE_REVIEW funn A2]
 
 ### Demo
 ```bash
 npm install        # Ingen feil
-npm run build      # Ingen feil
+npm run build      # Ingen feil (krever både S0-1 og S0-1b)
+npm audit          # 0 vulnerabilities etter S0-10
 npm test           # Minst én grønn test
 npm run dev        # Starter, feiler ryddig når TS6 ikke er tilgjengelig
 ```
+
+**Verifisert:** Med S0-1 + S0-1b alene (altså `yaml` installert og `ignoreDeprecations` fjernet/satt til `"5.0"`) går `npm run build` grønt og `npm run dev` feiler kun på TS6-connection — ingen andre build- eller type-feil finnes i kodebasen.
 
 ---
 
