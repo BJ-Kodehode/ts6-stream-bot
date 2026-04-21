@@ -1,0 +1,600 @@
+/*
+ * TS6 Stream Bot — Design Tokens
+ * -------------------------------------------------------------------
+ * Én kilde for farger, typografi, spacing osv. Ment å kopieres inn i
+ * frontend-prosjektet (f.eks. `dashboard/src/styles/tokens.css`) og
+ * importeres én gang i main-entry.
+ *
+ * Alle komponenter skal referere til disse variablene —
+ * aldri rå hex-verdier eller px.
+ *
+ * Bruk:
+ *   @import "./tokens.css";
+ *   .button { background: var(--color-accent); padding: var(--space-2) var(--space-4); }
+ *
+ * Tema-bytte:
+ *   <html data-theme="light"> aktiverer light mode.
+ */
+
+/* ========================================================================
+   Default (dark) theme
+   ======================================================================== */
+:root,
+:root[data-theme="dark"] {
+  /* --- Brand & accent ------------------------------------------------ */
+  --color-brand-50:   #eef5ff;
+  --color-brand-100:  #dbe8ff;
+  --color-brand-200:  #b8d0ff;
+  --color-brand-300:  #8fb3ff;
+  --color-brand-400:  #6f9dff;
+  --color-brand-500:  #4c9aff;  /* hovedaksent */
+  --color-brand-600:  #2e7de0;
+  --color-brand-700:  #1f5ebb;
+  --color-brand-800:  #164686;
+  --color-brand-900:  #0f2f5c;
+
+  /* --- Neutral ramp (backgrounds & text) ----------------------------- */
+  --color-neutral-0:   #05080d;   /* deepest */
+  --color-neutral-50:  #0a0e14;   /* page background */
+  --color-neutral-100: #11161f;   /* surface */
+  --color-neutral-200: #1a1f2e;   /* surface raised */
+  --color-neutral-300: #252c3d;   /* border strong */
+  --color-neutral-400: #2f384f;   /* divider */
+  --color-neutral-500: #4a5470;   /* placeholder text */
+  --color-neutral-600: #697289;   /* muted text */
+  --color-neutral-700: #9199ab;   /* secondary text */
+  --color-neutral-800: #c7cdd9;   /* primary text */
+  --color-neutral-900: #e8ebf2;   /* high-contrast text */
+
+  /* --- Semantic status ----------------------------------------------- */
+  --color-success:        #2dc275;
+  --color-success-subtle: rgba(45, 194, 117, 0.12);
+  --color-success-border: rgba(45, 194, 117, 0.30);
+
+  --color-warning:        #f5a524;
+  --color-warning-subtle: rgba(245, 165, 36, 0.12);
+  --color-warning-border: rgba(245, 165, 36, 0.30);
+
+  --color-danger:         #ef4a59;
+  --color-danger-subtle:  rgba(239, 74, 89, 0.12);
+  --color-danger-border:  rgba(239, 74, 89, 0.30);
+
+  --color-info:           var(--color-brand-400);
+  --color-info-subtle:    rgba(111, 157, 255, 0.12);
+  --color-info-border:    rgba(111, 157, 255, 0.30);
+
+  /* --- Semantic roles (bruk disse i UI-kode!) ------------------------ */
+  --color-bg:             var(--color-neutral-50);
+  --color-surface:        var(--color-neutral-100);
+  --color-surface-raised: var(--color-neutral-200);
+  --color-surface-hover:  var(--color-neutral-300);
+
+  --color-border:         var(--color-neutral-300);
+  --color-border-strong:  var(--color-neutral-400);
+
+  --color-text:           var(--color-neutral-900);
+  --color-text-muted:     var(--color-neutral-700);
+  --color-text-subtle:    var(--color-neutral-600);
+  --color-text-placeholder: var(--color-neutral-500);
+  --color-text-on-accent: #ffffff;
+
+  --color-accent:          var(--color-brand-500);
+  --color-accent-hover:    var(--color-brand-400);
+  --color-accent-active:   var(--color-brand-600);
+  --color-accent-subtle:   rgba(76, 154, 255, 0.12);
+  --color-accent-border:   rgba(76, 154, 255, 0.40);
+
+  /* --- Focus ring ---------------------------------------------------- */
+  --color-focus:           var(--color-brand-400);
+  --focus-ring:            0 0 0 3px rgba(76, 154, 255, 0.40);
+
+  /* ===================================================================
+     Typography
+     =================================================================== */
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "Fira Code", "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* Modular scale — 1.125 ratio */
+  --font-size-2xs: 0.6875rem;  /* 11px */
+  --font-size-xs:  0.75rem;    /* 12px */
+  --font-size-sm:  0.875rem;   /* 14px */
+  --font-size-md:  1rem;       /* 16px — base */
+  --font-size-lg:  1.125rem;   /* 18px */
+  --font-size-xl:  1.5rem;     /* 24px */
+  --font-size-2xl: 2rem;       /* 32px */
+  --font-size-3xl: 2.5rem;     /* 40px */
+
+  --line-height-tight:   1.2;
+  --line-height-snug:    1.4;
+  --line-height-normal:  1.5;
+  --line-height-relaxed: 1.65;
+
+  --letter-spacing-tight:  -0.015em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide:   0.02em;
+  --letter-spacing-wider:  0.05em;  /* caps/labels */
+
+  /* ===================================================================
+     Spacing (4px base scale)
+     =================================================================== */
+  --space-0:  0;
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+
+  /* ===================================================================
+     Radius
+     =================================================================== */
+  --radius-none: 0;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ===================================================================
+     Shadows (mørkt UI bruker disse sparsomt)
+     =================================================================== */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.50);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.60);
+
+  --shadow-focus: 0 0 0 3px var(--color-accent-subtle);
+
+  /* ===================================================================
+     Layout
+     =================================================================== */
+  --layout-topbar-height: 56px;
+  --layout-sidebar-width: 240px;
+  --layout-sidebar-collapsed: 64px;
+  --layout-max-width: 1440px;
+  --layout-content-padding: var(--space-6);
+
+  /* ===================================================================
+     Motion
+     =================================================================== */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+
+  --duration-instant: 80ms;
+  --duration-fast:    140ms;
+  --duration-medium:  240ms;
+  --duration-slow:    400ms;
+
+  /* ===================================================================
+     Z-index
+     =================================================================== */
+  --z-base:      1;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   900;
+  --z-modal:     1000;
+  --z-popover:   1050;
+  --z-toast:     1100;
+  --z-tooltip:   1200;
+
+  /* ===================================================================
+     Component tokens (kan overrides per komponent ved behov)
+     =================================================================== */
+
+  /* Button */
+  --btn-height-sm: 28px;
+  --btn-height-md: 36px;
+  --btn-height-lg: 44px;
+  --btn-padding-x-sm: var(--space-3);
+  --btn-padding-x-md: var(--space-4);
+  --btn-padding-x-lg: var(--space-5);
+
+  /* Input */
+  --input-height: 36px;
+  --input-padding-x: var(--space-3);
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
+  --input-border-focus: var(--color-accent);
+
+  /* Card */
+  --card-padding: var(--space-5);
+  --card-bg: var(--color-surface);
+  --card-border: var(--color-border);
+
+  /* Table */
+  --table-row-height: 44px;
+  --table-header-bg: var(--color-surface-raised);
+  --table-row-hover: var(--color-surface-hover);
+  --table-stripe-bg: rgba(255, 255, 255, 0.015);
+}
+
+/* ========================================================================
+   Light theme override
+   Aktiverer via <html data-theme="light">
+   ======================================================================== */
+:root[data-theme="light"] {
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #fafbfc;
+  --color-neutral-100: #f4f5f8;
+  --color-neutral-200: #edeff4;
+  --color-neutral-300: #dfe2eb;
+  --color-neutral-400: #c5cbd8;
+  --color-neutral-500: #8b94aa;
+  --color-neutral-600: #6a7389;
+  --color-neutral-700: #4a5367;
+  --color-neutral-800: #2b3244;
+  --color-neutral-900: #0e131d;
+
+  --color-bg:             var(--color-neutral-50);
+  --color-surface:        var(--color-neutral-0);
+  --color-surface-raised: var(--color-neutral-100);
+  --color-surface-hover:  var(--color-neutral-200);
+
+  --color-border:         var(--color-neutral-200);
+  --color-border-strong:  var(--color-neutral-300);
+
+  --color-text:           var(--color-neutral-900);
+  --color-text-muted:     var(--color-neutral-700);
+  --color-text-subtle:    var(--color-neutral-500);
+
+  --color-accent:         var(--color-brand-600);
+  --color-accent-hover:   var(--color-brand-700);
+  --color-accent-active:  var(--color-brand-800);
+
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 10px rgba(15, 23, 42, 0.10);
+  --shadow-lg: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+/* ========================================================================
+   Respekter "reduce motion"
+   ======================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast:    0ms;
+    --duration-medium:  0ms;
+    --duration-slow:    0ms;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================================================
+   Base reset (minimal)
+   ======================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  font-size: var(--font-size-md);
+}
+
+/* Tabulære tall i alle mono og tall-kontekster */
+code, pre, kbd, samp, .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fjern default button/input-styling — komponenter definerer sin egen */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Synlig fokus kun via tastatur */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent-subtle);
+  color: var(--color-text);
+}
+
+/* Scrollbar (WebKit) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-full); border: 2px solid var(--color-bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-500); }
+
+/* ========================================================================
+   Utilitetsklasser (valgfrie)
+   ======================================================================== */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+.text-muted  { color: var(--color-text-muted); }
+.text-subtle { color: var(--color-text-subtle); }
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Status-prikk med valgfri puls */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-500);
+}
+.status-dot--success { background: var(--color-success); }
+.status-dot--warning { background: var(--color-warning); }
+.status-dot--danger  { background: var(--color-danger); }
+.status-dot--pulse {
+  animation: pulse 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50%      { box-shadow: 0 0 0 6px transparent; opacity: 0.6; }
+}
+
+/* ========================================================================
+   Eksempler på komponent-styling (som utgangspunkt — kopier til CSS modules)
+   ======================================================================== */
+
+/* --- Button ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-x-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+.btn--primary:hover:not(:disabled) { background: var(--color-accent-hover); }
+.btn--primary:active:not(:disabled) { background: var(--color-accent-active); }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  border-color: var(--color-accent);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.btn--danger {
+  background: var(--color-danger);
+  color: #ffffff;
+}
+.btn--danger:hover:not(:disabled) { filter: brightness(1.1); }
+
+.btn--sm { height: var(--btn-height-sm); padding: 0 var(--btn-padding-x-sm); font-size: var(--font-size-xs); }
+.btn--lg { height: var(--btn-height-lg); padding: 0 var(--btn-padding-x-lg); font-size: var(--font-size-md); }
+
+/* --- Badge ------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.badge--success { background: var(--color-success-subtle); color: var(--color-success); border-color: var(--color-success-border); }
+.badge--warning { background: var(--color-warning-subtle); color: var(--color-warning); border-color: var(--color-warning-border); }
+.badge--danger  { background: var(--color-danger-subtle);  color: var(--color-danger);  border-color: var(--color-danger-border); }
+.badge--info    { background: var(--color-info-subtle);    color: var(--color-info);    border-color: var(--color-info-border); }
+
+/* --- Card -------------------------------------------------------------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: var(--card-padding);
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+/* --- Table ------------------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--font-size-sm);
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--table-header-bg);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-size: var(--font-size-xs);
+}
+
+.table tbody td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--table-row-height);
+}
+
+.table tbody tr:hover {
+  background: var(--table-row-hover);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Metric ------------------------------------------------------------ */
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.metric__label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text-muted);
+}
+
+.metric__value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.metric__trend {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-subtle);
+}
+.metric__trend--up   { color: var(--color-success); }
+.metric__trend--down { color: var(--color-danger); }
+
+/* --- LogStream --------------------------------------------------------- */
+.log-stream {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid transparent;
+}
+
+.log-entry__time  { color: var(--color-text-subtle); white-space: nowrap; }
+.log-entry__level { text-transform: uppercase; font-weight: var(--font-weight-semibold); }
+.log-entry__level--debug { color: var(--color-text-subtle); }
+.log-entry__level--info  { color: var(--color-info); }
+.log-entry__level--warn  { color: var(--color-warning); }
+.log-entry__level--error { color: var(--color-danger); }
+.log-entry__msg { color: var(--color-text); white-space: pre-wrap; word-break: break-word; }
+
+/* ========================================================================
+   Print styles (for eksport av logger / rapporter)
+   ======================================================================== */
+@media print {
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+  }
+  .no-print { display: none !important; }
+}
